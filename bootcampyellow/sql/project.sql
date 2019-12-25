@@ -5,7 +5,7 @@ Id INT PRIMARY KEY NOT NULL auto_increment,
 TeamName VARCHAR(50) NOT NULL,
 CreationDate DATETIME NULL
 );
-
+select * from team
 CREATE TABLE Leaderboard.member(                     
 Id INT PRIMARY KEY NOT NULL auto_increment,
 MemberName VARCHAR(100) NOT NULL,
@@ -54,12 +54,12 @@ DELETE FROM Leaderboard.team
 WHERE Id in 4;
 
 
-INSERT INTO Leaderboard.team(MemberName,TeamId,gender,CreationDate) VALUES('SUJITH','4','MALE','23/12/2019'sysdate());
-INSERT INTO Leaderboard.team(MemberName,TeamId,gender,CreationDate) VALUES('ANJANA','4','FEMALE','23/12/2019'sysdate());
-INSERT INTO Leaderboard.team(MemberName,TeamId,gender,CreationDate) VALUES('SUMAYYA','4','FEMALE','23/12/2019'sysdate());
-INSERT INTO Leaderboard.team(MemberName,TeamId,gender,CreationDate) VALUES('ASWIN','3','FEMALE','23/12/2019'sysdate());
-INSERT INTO Leaderboard.team(MemberName,TeamId,gender,CreationDate) VALUES('SONA','4','FEMALE','23/12/2019'sysdate());
-INSERT INTO Leaderboard.team(MemberName,TeamId,gender,CreationDate) VALUES('DIVYA','4','FEMALE','23/12/2019'sysdate());
+INSERT INTO Leaderboard.member(MemberName,TeamId,gender,CreationDate) VALUES('SUJITH','4','MALE','23/12/2019'sysdate());
+INSERT INTO Leaderboard.member(MemberName,TeamId,gender,CreationDate) VALUES('ANJANA','4','FEMALE','23/12/2019'sysdate());
+INSERT INTO Leaderboard.member(MemberName,TeamId,gender,CreationDate) VALUES('SUMAYYA','4','FEMALE','23/12/2019'sysdate());
+INSERT INTO Leaderboard.member(MemberName,TeamId,gender,CreationDate) VALUES('ASWIN','3','FEMALE','23/12/2019'sysdate());
+INSERT INTO Leaderboard.member(MemberName,TeamId,gender,CreationDate) VALUES('SONA','4','FEMALE','23/12/2019'sysdate());
+INSERT INTO Leaderboard.member(MemberName,TeamId,gender,CreationDate) VALUES('DIVYA','4','FEMALE','23/12/2019'sysdate());
 
 
 
