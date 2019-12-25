@@ -1,0 +1,27 @@
+header{
+
+
+    width: 100%;
+    background-color: #33c6c3;
+    padding: 20px 100px;
+}
+
+header a{
+
+    color: #ffffff;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+h3{
+
+    color: #1c5fdb;
+}
+
+.box{
+
+    padding: 15px;
+    margin: 50px 0 0 0;
+    background: #f1f1f1;
+    border: 1px solid #dddddd;
+}
