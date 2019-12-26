@@ -100,20 +100,39 @@ public class TeamDaoImpl implements TeamDao {
 
 	@Override
 	public MemberScore addScores(MemberScore memberScore) {
-		try {
-			KeyHolder keyHolder = new GeneratedKeyHolder();
-			jdbcTemplate.update(new PreparedStatementCreator() {
-				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-					String[] returnValColumn = new String[] { "id" };
-					PreparedStatement statement = con.prepareStatement("insert into IndividualScore (MemberId, TeamId, Score) values  (?, ?, ?)", returnValColumn);
-					statement.setInt(1, memberScore.getId());
-					statement.setInt(2, memberScore.getTeamId()); 
-					statement.setInt(3, memberScore.getScore());
-					return statement;
+		List<TeamMembers> teamMembers = getTeamScores();
+		if(teamMembers != null && teamMembers.size() > 0) { 
+			for(TeamMembers eachTeam : teamMembers) { 
+				if(eachTeam.getMembers() != null && eachTeam.getMembers().size() > 0) { 
+					for(MemberScore score : eachTeam.getMembers()) { 
+						if(score.getId() == memberScore.getId() && score.getTeamId() == memberScore.getTeamId()) { 
+							int newScore = score.getScore() + memberScore.getScore() ; 
+							try {
+								jdbcTemplate.update("update IndividualScore set score = ? where MemberId = ? and TeamId = ? ",
+										new Object[] { newScore, memberScore.getId(), memberScore.getTeamId() });
+							} catch (Exception e) {
+								System.out.println("Error while updating a Score : " + e.getMessage());
+							}
+						}
+					}
 				}
-			}, keyHolder);
-		} catch (Exception e) {
-			System.out.println("Error while adding a new team : " + e.getMessage());
+			}
+		} else { 
+			try {
+				KeyHolder keyHolder = new GeneratedKeyHolder();
+				jdbcTemplate.update(new PreparedStatementCreator() {
+					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+						String[] returnValColumn = new String[] { "id" };
+						PreparedStatement statement = con.prepareStatement("insert into IndividualScore (MemberId, TeamId, Score) values  (?, ?, ?)", returnValColumn);
+						statement.setInt(1, memberScore.getId());
+						statement.setInt(2, memberScore.getTeamId()); 
+						statement.setInt(3, memberScore.getScore());
+						return statement;
+					}
+				}, keyHolder);
+			} catch (Exception e) {
+				System.out.println("Error while adding a new score : " + e.getMessage());
+			}
 		}
 		return memberScore; 
 	}
