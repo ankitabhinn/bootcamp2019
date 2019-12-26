@@ -101,6 +101,7 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public MemberScore addScores(MemberScore memberScore) {
 		List<TeamMembers> teamMembers = getTeamScores();
+		Boolean updatedOrNot = Boolean.FALSE; 
 		if(teamMembers != null && teamMembers.size() > 0) { 
 			for(TeamMembers eachTeam : teamMembers) { 
 				if(eachTeam.getMembers() != null && eachTeam.getMembers().size() > 0) { 
@@ -110,6 +111,7 @@ public class TeamDaoImpl implements TeamDao {
 							try {
 								jdbcTemplate.update("update IndividualScore set score = ? where MemberId = ? and TeamId = ? ",
 										new Object[] { newScore, memberScore.getId(), memberScore.getTeamId() });
+								updatedOrNot = Boolean.TRUE;
 							} catch (Exception e) {
 								System.out.println("Error while updating a Score : " + e.getMessage());
 							}
@@ -117,7 +119,8 @@ public class TeamDaoImpl implements TeamDao {
 					}
 				}
 			}
-		} else { 
+		} 
+		if(!updatedOrNot) { 
 			try {
 				KeyHolder keyHolder = new GeneratedKeyHolder();
 				jdbcTemplate.update(new PreparedStatementCreator() {
