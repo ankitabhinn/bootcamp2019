@@ -109,8 +109,14 @@ public class TeamDaoImpl implements TeamDao {
 						if(score.getId() == memberScore.getId() && score.getTeamId() == memberScore.getTeamId()) { 
 							int newScore = score.getScore() + memberScore.getScore() ; 
 							try {
-								jdbcTemplate.update("update IndividualScore set score = ? where MemberId = ? and TeamId = ? ",
-										new Object[] { newScore, memberScore.getId(), memberScore.getTeamId() });
+								if(score.getScore() == 0) { 
+									jdbcTemplate.update("insert into IndividualScore (MemberId, TeamId, Score) values  (?, ?, ?) ",
+											new Object[] { memberScore.getId(), memberScore.getTeamId(), newScore });
+								} else {
+									jdbcTemplate.update("update IndividualScore set score = ? where MemberId = ? and TeamId = ? ",
+											new Object[] { newScore, memberScore.getId(), memberScore.getTeamId() });
+								}
+								
 								updatedOrNot = Boolean.TRUE;
 							} catch (Exception e) {
 								System.out.println("Error while updating a Score : " + e.getMessage());
